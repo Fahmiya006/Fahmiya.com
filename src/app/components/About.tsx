@@ -28,7 +28,7 @@ export function About() {
             viewport={{ once: true }}
           >
             <div className="relative">
-              <div className="w-80 h-80 mx-auto rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-2 border-blue-400/30 p-4 flex items-center justify-center overflow-hidden">
+              <div className="w-80 h-80 sm:w-96 sm:h-96 md:w-[26rem] md:h-[26rem] mx-auto rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border-2 border-blue-400/30 p-4 flex items-center justify-center overflow-hidden">
                 <img
                   src={profileImage}
                   alt="Fathima Fahmiya"

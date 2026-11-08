@@ -142,11 +142,11 @@ function CertCard({ cert, onClick }: { cert: Certificate; onClick: () => void })
       whileHover={{ scale: 1.08, y: -8 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
       onClick={onClick}
-      className="flex-shrink-0 w-72 cursor-pointer"
+      className="flex-shrink-0 w-80 sm:w-[26rem] cursor-pointer"
     >
       <div className="bg-gray-900/70 backdrop-blur-sm border border-gray-700/60 rounded-xl overflow-hidden hover:border-purple-400/60 transition-all duration-300 shadow-lg hover:shadow-purple-500/10">
         {/* Preview */}
-        <div className="h-44 bg-gray-800/60 relative overflow-hidden">
+        <div className="h-56 sm:h-72 bg-gray-800/60 relative overflow-hidden">
           <img
             src={cert.file}
             alt={cert.title}
@@ -159,10 +159,10 @@ function CertCard({ cert, onClick }: { cert: Certificate; onClick: () => void })
         </div>
 
         {/* Info */}
-        <div className="p-4">
-          <div className="text-2xl mb-2">{cert.icon}</div>
-          <h3 className="text-sm font-bold text-white leading-snug mb-1">{cert.title}</h3>
-          <span className={`inline-block px-2 py-0.5 rounded-full bg-gradient-to-r ${cert.color} text-white text-xs font-semibold`}>
+        <div className="p-5">
+          <div className="text-3xl mb-2">{cert.icon}</div>
+          <h3 className="text-base font-bold text-white leading-snug mb-2">{cert.title}</h3>
+          <span className={`inline-block px-3 py-1 rounded-full bg-gradient-to-r ${cert.color} text-white text-sm font-semibold`}>
             {cert.issuer}
           </span>
         </div>
@@ -185,7 +185,7 @@ function CertModal({ cert, onClose }: { cert: Certificate; onClose: () => void }
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.7, opacity: 0 }}
         transition={{ type: "spring", stiffness: 280, damping: 24 }}
-        className="relative bg-gray-900 border border-gray-700 rounded-2xl overflow-hidden shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col"
+        className="relative bg-gray-900 border border-gray-700 rounded-2xl overflow-hidden shadow-2xl w-full max-w-5xl max-h-[92vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         <div className={`h-1 w-full bg-gradient-to-r ${cert.color}`} />
@@ -207,7 +207,7 @@ function CertModal({ cert, onClose }: { cert: Certificate; onClose: () => void }
           <img
             src={cert.file}
             alt={cert.title}
-            className="w-full h-full object-contain rounded-lg max-h-[65vh]"
+            className="w-full h-full object-contain rounded-lg max-h-[74vh]"
           />
         </div>
       </motion.div>
@@ -278,7 +278,7 @@ export function Certificates() {
               className="flex gap-6"
               style={{
                 width: 'max-content',
-                animation: 'marqueeScroll 48s linear infinite',
+                animation: 'marqueeScroll 75s linear infinite',
                 animationPlayState: isPaused ? 'paused' : 'running'
               }}
             >

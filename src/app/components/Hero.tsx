@@ -3,6 +3,8 @@ import { motion } from 'motion/react';
 import { BarChart2, Code2, Users } from 'lucide-react';
 
 export function Hero() {
+  const words = "FATHIMA FAHMIYA".split(" ");
+
   return (
     <section className="min-h-screen flex items-center justify-center px-6 relative">
       <div className="text-center max-w-4xl">
@@ -13,18 +15,25 @@ export function Hero() {
           className="mb-8"
         >
           <h1 className="text-6xl md:text-8xl font-bold mb-4">
-            {"FATHIMA FAHMIYA".split("").map((letter, index) => (
-              <motion.span
-                key={index}
-                initial={{ opacity: 0, y: 50, rotateX: -90 }}
-                animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.07, ease: "easeOut" }}
-                className="inline-block bg-gradient-to-r from-blue-400 via-purple-500 to-pink-400 bg-clip-text text-transparent"
-                style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
-                whileHover={{ scale: 1.2, rotateY: 360, transition: { duration: 0.5 } }}
+            {words.map((word, wordIndex) => (
+              <span
+                key={wordIndex}
+                className={`inline-block whitespace-nowrap ${wordIndex < words.length - 1 ? "mr-[0.3em]" : ""}`}
               >
-                {letter === " " ? " " : letter}
-              </motion.span>
+                {word.split("").map((letter, index) => (
+                  <motion.span
+                    key={index}
+                    initial={{ opacity: 0, y: 50, rotateX: -90 }}
+                    animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                    transition={{ duration: 0.8, delay: (index + (wordIndex === 0 ? 0 : words[0].length + 1)) * 0.07, ease: "easeOut" }}
+                    className="inline-block bg-gradient-to-r from-blue-400 via-purple-500 to-pink-400 bg-clip-text text-transparent"
+                    style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
+                    whileHover={{ scale: 1.2, rotateY: 360, transition: { duration: 0.5 } }}
+                  >
+                    {letter}
+                  </motion.span>
+                ))}
+              </span>
             ))}
           </h1>
           <motion.div

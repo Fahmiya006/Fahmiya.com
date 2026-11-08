@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { Users, Megaphone, FlaskConical, Star, BookOpen, Briefcase, Brain, ClipboardList } from 'lucide-react';
+
+// Snake timeline settings
+const TURN = 44; // width of the U-turn at the end of each row (px)
+const GAP = 32;  // vertical gap between rows (px)
+const LINE = 'rgba(192, 132, 252, 0.6)'; // timeline colour (purple-400 at 60%)
 
 export function Experience() {
   const experiences = [
@@ -86,9 +91,49 @@ export function Experience() {
     green:  { border: "hover:border-green-400/50",  dot: "bg-green-400",  text: "text-green-400",  bg: "bg-green-500/20",  tag: "bg-green-500/20 text-green-300 border-green-400/30" }
   };
 
+  // How many cards fit on one row of the snake for the current screen width
+  const [perRow, setPerRow] = useState(4);
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      setPerRow(w >= 1200 ? 4 : w >= 900 ? 3 : w >= 600 ? 2 : 1);
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  const rows: (typeof experiences)[] = [];
+  for (let i = 0; i < experiences.length; i += perRow) {
+    rows.push(experiences.slice(i, i + perRow));
+  }
+
+  const renderCard = (exp: (typeof experiences)[number], c: (typeof colorMap)[string]) => (
+    <motion.div whileHover={{ scale: 1.03 }} className="h-full w-full">
+      <div className={`h-full bg-gray-900/80 backdrop-blur-sm border border-gray-700/50 ${c.border} rounded-lg p-5 transition-all duration-300`}>
+        <div className="flex items-center mb-3">
+          <div className={`p-2 ${c.bg} rounded-full mr-4 flex-shrink-0`}>
+            <exp.icon className={`w-5 h-5 ${c.text}`} />
+          </div>
+          <div>
+            <h3 className="text-base font-bold text-white leading-tight">{exp.title}</h3>
+            <p className={`text-sm ${c.text}`}>{exp.company}</p>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-gray-500 text-xs">{exp.org}</span>
+          <span className={`px-2 py-0.5 rounded-full text-xs border ${c.tag}`}>{exp.period}</span>
+        </div>
+
+        <p className="text-gray-300 text-sm">{exp.description}</p>
+      </div>
+    </motion.div>
+  );
+
   return (
     <section className="py-20 px-6">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -104,60 +149,107 @@ export function Experience() {
           </p>
         </motion.div>
 
-        <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-400 via-purple-400 to-pink-400 rounded-full" />
-
-          {experiences.map((exp, index) => {
-            const c = colorMap[exp.color];
-            return (
-              <motion.div
-                key={exp.title}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.1 }}
-                viewport={{ once: true }}
-                className={`relative flex items-center mb-12 ${
-                  index % 2 === 0 ? 'justify-start' : 'justify-end'
-                }`}
-              >
-                {/* Timeline node */}
-                <motion.div
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  transition={{ delay: 0.4, duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className={`absolute left-1/2 transform -translate-x-1/2 w-4 h-4 ${c.dot} rounded-full border-4 border-gray-900 z-10`}
-                />
-
-                {/* Content card */}
-                <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  className={`w-5/12 ${index % 2 === 0 ? 'mr-auto' : 'ml-auto'}`}
+        {perRow === 1 ? (
+          /* Phones: a simple vertical timeline */
+          <div className="relative pl-8">
+            <div className="absolute left-2 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-400 via-purple-400 to-pink-400 rounded-full" />
+            {experiences.map((exp) => {
+              const c = colorMap[exp.color];
+              return (
+                <div key={exp.title} className="relative mb-8 last:mb-0">
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    transition={{ duration: 0.4 }}
+                    viewport={{ once: true }}
+                    className={`absolute -left-8 top-6 w-5 h-5 ${c.dot} rounded-full border-4 border-gray-900 z-10`}
+                  />
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                  >
+                    {renderCard(exp, c)}
+                  </motion.div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          /* Larger screens: a horizontal snake. Row 1 runs left to right, row 2 right to left, and so on. */
+          <div>
+            {rows.map((row, r) => {
+              const rtl = r % 2 === 1;
+              const isLastRow = r === rows.length - 1;
+              return (
+                <div
+                  key={r}
+                  className="relative"
+                  style={{ paddingLeft: TURN, paddingRight: TURN, marginBottom: isLastRow ? 0 : GAP }}
                 >
-                  <div className={`bg-gray-900/80 backdrop-blur-sm border border-gray-700/50 ${c.border} rounded-lg p-6 transition-all duration-300`}>
-                    <div className="flex items-center mb-3">
-                      <div className={`p-2 ${c.bg} rounded-full mr-4 flex-shrink-0`}>
-                        <exp.icon className={`w-5 h-5 ${c.text}`} />
-                      </div>
-                      <div>
-                        <h3 className="text-base font-bold text-white leading-tight">{exp.title}</h3>
-                        <p className={`text-sm ${c.text}`}>{exp.company}</p>
-                      </div>
-                    </div>
+                  <div
+                    dir={rtl ? 'rtl' : 'ltr'}
+                    className="grid"
+                    style={{ gridTemplateColumns: `repeat(${perRow}, minmax(0, 1fr))` }}
+                  >
+                    {row.map((exp, i) => {
+                      const c = colorMap[exp.color];
+                      const globalIndex = r * perRow + i;
+                      const isFirst = globalIndex === 0;
+                      const isLast = globalIndex === experiences.length - 1;
+                      const lineSides = rtl
+                        ? { right: isFirst ? '50%' : 0, left: isLast ? '50%' : 0 }
+                        : { left: isFirst ? '50%' : 0, right: isLast ? '50%' : 0 };
+                      return (
+                        <div key={exp.title} dir="ltr" className="relative flex px-3 pt-8">
+                          {/* Line segment through this card's node */}
+                          <div className="absolute h-1" style={{ top: 8, backgroundColor: LINE, ...lineSides }} />
 
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-gray-500 text-xs">{exp.org}</span>
-                      <span className={`px-2 py-0.5 rounded-full text-xs border ${c.tag}`}>{exp.period}</span>
-                    </div>
+                          {/* Node */}
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            whileInView={{ scale: 1 }}
+                            transition={{ delay: i * 0.12 + 0.2, duration: 0.4 }}
+                            viewport={{ once: true }}
+                            className={`absolute top-0 left-1/2 transform -translate-x-1/2 w-5 h-5 ${c.dot} rounded-full border-4 border-gray-900 z-10`}
+                          />
 
-                    <p className="text-gray-300 text-sm">{exp.description}</p>
+                          <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: i * 0.12 }}
+                            viewport={{ once: true }}
+                            className="w-full"
+                          >
+                            {renderCard(exp, c)}
+                          </motion.div>
+                        </div>
+                      );
+                    })}
                   </div>
-                </motion.div>
-              </motion.div>
-            );
-          })}
-        </div>
+
+                  {/* U-turn down to the next row */}
+                  {!isLastRow && (
+                    <div
+                      className="absolute"
+                      style={{
+                        top: 8,
+                        width: TURN,
+                        height: `calc(100% + ${GAP + 4}px)`,
+                        borderStyle: 'solid',
+                        borderColor: LINE,
+                        borderWidth: rtl ? '4px 0 4px 4px' : '4px 4px 4px 0',
+                        borderRadius: rtl ? '20px 0 0 20px' : '0 20px 20px 0',
+                        ...(rtl ? { left: 0 } : { right: 0 })
+                      }}
+                    />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );
