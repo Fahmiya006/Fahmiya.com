@@ -6,7 +6,7 @@ export function Hero() {
   const words = "FATHIMA FAHMIYA".split(" ");
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 relative">
+    <section className="min-h-[calc(100vh-6rem)] flex items-center justify-center px-6 relative">
       <div className="text-center max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 50 }}

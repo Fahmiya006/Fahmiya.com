@@ -4,7 +4,7 @@ import { Users, Megaphone, FlaskConical, Star, BookOpen, Briefcase, Brain, Clipb
 
 // Snake timeline settings
 const TURN = 44; // width of the U-turn at the end of each row (px)
-const GAP = 32;  // vertical gap between rows (px)
+const GAP = 56;  // vertical gap between rows (px)
 const LINE = 'rgba(192, 132, 252, 0.6)'; // timeline colour (purple-400 at 60%)
 
 export function Experience() {
@@ -92,11 +92,11 @@ export function Experience() {
   };
 
   // How many cards fit on one row of the snake for the current screen width
-  const [perRow, setPerRow] = useState(4);
+  const [perRow, setPerRow] = useState(3);
   useEffect(() => {
     const update = () => {
       const w = window.innerWidth;
-      setPerRow(w >= 1200 ? 4 : w >= 900 ? 3 : w >= 600 ? 2 : 1);
+      setPerRow(w >= 900 ? 3 : w >= 600 ? 2 : 1); // 3 per row = three rows for 8 entries
     };
     update();
     window.addEventListener('resize', update);
@@ -202,7 +202,7 @@ export function Experience() {
                         ? { right: isFirst ? '50%' : 0, left: isLast ? '50%' : 0 }
                         : { left: isFirst ? '50%' : 0, right: isLast ? '50%' : 0 };
                       return (
-                        <div key={exp.title} dir="ltr" className="relative flex px-3 pt-8">
+                        <div key={exp.title} dir="ltr" className="relative flex px-6 pt-8">
                           {/* Line segment through this card's node */}
                           <div className="absolute h-1" style={{ top: 8, backgroundColor: LINE, ...lineSides }} />
 
