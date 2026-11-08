@@ -57,14 +57,16 @@ export function About() {
             <p className="text-gray-300 text-lg leading-relaxed">
               I am an aspiring <span className="text-blue-400 font-semibold">Business & Data Analyst</span> with a strong foundation
               in Python, C++, DSA, DBMS, and OOP. I love turning raw data into meaningful insights — from
-              customer churn patterns and e-commerce trends to marketing funnel analytics — and building
-              ML models that solve real problems.
+              customer churn patterns and investor preferences to marketing funnel analytics — and building
+              ML models that solve real problems. I recently completed a Business Analytics internship at
+              Cognifyz IT Solutions, and I am now designing a post-quantum protocol to secure ML checkpoint transfers.
             </p>
 
             <p className="text-gray-300 text-lg leading-relaxed">
               Beyond the code, I am a <span className="text-purple-400 font-semibold">natural leader</span>.
-              As Head of Programs & Events at the AU Entrepreneurship Club, I oversee cross-functional teams,
-              drive large-scale events, and have organized national-level hackathons. I thrive at the
+              As Head of Programs & Events at the AU Entrepreneurship Club, AI/ML Innovation Lead at Google
+              Developer Groups (MIT), and Joint Secretary of the Association of Computer Technologists, I oversee
+              cross-functional teams, drive large-scale events, and have organized national-level hackathons. I thrive at the
               intersection of technology, strategy, and people.
             </p>
 

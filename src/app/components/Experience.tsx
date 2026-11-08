@@ -1,9 +1,27 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Users, Megaphone, FlaskConical, Star, BookOpen } from 'lucide-react';
+import { Users, Megaphone, FlaskConical, Star, BookOpen, Briefcase, Brain, ClipboardList } from 'lucide-react';
 
 export function Experience() {
   const experiences = [
+    {
+      title: "Business Analytics Intern",
+      company: "Cognifyz IT Solutions Pvt. Ltd.",
+      org: "Internship",
+      period: "Jul – Aug 2026",
+      description: "Completed a one-month business analytics internship, commended for coordination, communication, and attention to detail.",
+      icon: Briefcase,
+      color: "cyan"
+    },
+    {
+      title: "AI/ML Innovation Lead",
+      company: "Google Developer Groups",
+      org: "GDG MIT",
+      period: "2026 – Present",
+      description: "Lead the AI/ML track: planning workshops and member projects so students learn AI by building it.",
+      icon: Brain,
+      color: "purple"
+    },
     {
       title: "Head of Programs & Events",
       company: "AU Entrepreneurship Club",
@@ -12,6 +30,15 @@ export function Experience() {
       description: "Lead the planning and execution of entrepreneurship events, workshops, and initiatives while coordinating cross-functional teams.",
       icon: Users,
       color: "blue"
+    },
+    {
+      title: "Joint Secretary",
+      company: "Association of Computer Technologists",
+      org: "AUMIT",
+      period: "2026 – Present",
+      description: "Manage official records and liaise between members, faculty, and event organizers.",
+      icon: ClipboardList,
+      color: "green"
     },
     {
       title: "Organizer – National Legal Hackathon (AI × Law)",
@@ -88,7 +115,7 @@ export function Experience() {
                 key={exp.title}
                 initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
+                transition={{ duration: 0.8, delay: 0.1 }}
                 viewport={{ once: true }}
                 className={`relative flex items-center mb-12 ${
                   index % 2 === 0 ? 'justify-start' : 'justify-end'
@@ -98,7 +125,7 @@ export function Experience() {
                 <motion.div
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
-                  transition={{ delay: index * 0.2 + 0.4, duration: 0.5 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
                   viewport={{ once: true }}
                   className={`absolute left-1/2 transform -translate-x-1/2 w-4 h-4 ${c.dot} rounded-full border-4 border-gray-900 z-10`}
                 />

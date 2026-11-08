@@ -1,18 +1,34 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Github, Newspaper, MapPin, ShoppingCart, GraduationCap, TrendingUp, Users, Filter } from 'lucide-react';
+import { Github, Newspaper, MapPin, ShoppingCart, GraduationCap, TrendingUp, Users, Filter, ShieldCheck, Car, PiggyBank } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 
 export function Projects() {
   const projects = [
     {
+      title: "ML-KEM Quantum-Resilient File Transfer Protocol (Ongoing)",
+      description: "Post-quantum, fault-tolerant protocol that secures machine learning checkpoint transfers over simulated 6G networks, using ML-KEM (Kyber) for key establishment, AES-256 encryption, and checkpoint-based recovery.",
+      icon: ShieldCheck,
+      tech: ["Python", "ML-KEM (Kyber)", "AES-256"],
+      gradient: "from-emerald-400 to-cyan-500",
+      github: "https://github.com/Fahmiya006/ML-KEM-Based-Quantum-Resilient-Checkpoint-File-Transfer-Protocol"
+    },
+    {
+      title: "DriveAI – Smart Driving Assistant",
+      description: "Smart-driving web app with OSRM road routing, simulated adaptive traffic signals, voice alerts, and a driver safety score — installable on a phone or car tablet.",
+      icon: Car,
+      tech: ["JavaScript", "HTML/CSS", "Leaflet.js", "OSRM API", "Web Speech API"],
+      gradient: "from-sky-400 to-indigo-500",
+      github: "https://github.com/Fahmiya006/DriveAI"
+    },
+    {
       title: "FactAI – Fake News Prediction",
       description: "Machine learning model for fake news classification using text preprocessing, TF-IDF vectorization, and supervised learning — achieving over 98% accuracy on the evaluation dataset.",
       icon: Newspaper,
       tech: ["Python", "Azure Jupyter Notebook", "Pandas", "NumPy", "Scikit-learn", "NLTK"],
       gradient: "from-blue-400 to-cyan-500",
-      github: "https://github.com/Fahmiya006/Fake-News-Prediction"
+      github: "https://github.com/Fahmiya006/FactAI"
     },
     {
       title: "Smart Attendance System",
@@ -48,11 +64,19 @@ export function Projects() {
     },
     {
       title: "Customer Churn Analysis",
-      description: "Predictive analysis identifying key churn drivers and at-risk customer segments using classification models, enabling targeted retention strategies.",
+      description: "Analyzed 7,000+ customer records to quantify a 26.6% churn rate, identify the key churn drivers, and recommend targeted retention actions.",
       icon: Users,
-      tech: ["Python", "Scikit-learn", "Pandas", "Seaborn"],
+      tech: ["Python", "Pandas", "NumPy", "Matplotlib", "Seaborn"],
       gradient: "from-pink-400 to-rose-500",
       github: "https://github.com/Fahmiya006/Customer_Churn_Analysis"
+    },
+    {
+      title: "Investment Preference Analysis",
+      description: "Analyzed investor survey data across 7 investment avenues — PPF ranked best (2.03), but Mutual Funds led actual choice (45%).",
+      icon: PiggyBank,
+      tech: ["Python", "Pandas", "Matplotlib", "Jupyter Notebook"],
+      gradient: "from-amber-400 to-yellow-500",
+      github: "https://github.com/Fahmiya006/Most-Preferred-Investment-Avenue"
     },
     {
       title: "Marketing Funnel Analysis",
@@ -88,7 +112,7 @@ export function Projects() {
               key={project.title}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
+              transition={{ duration: 0.8, delay: (index % 3) * 0.1 }}
               viewport={{ once: true }}
               whileHover={{ y: -10, scale: 1.02 }}
               className="group"

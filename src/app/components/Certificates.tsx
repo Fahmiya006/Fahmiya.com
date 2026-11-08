@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Award, Trophy, Star, X } from 'lucide-react';
 
+import nasscomCert from '../../imports/Nasscom_GenAI_Gold.jpg';
+import nptelCert from '../../imports/NPTEL_Python_for_Data_Science.jpg';
+import cognifyzCert from '../../imports/Cognifyz_Internship.jpg';
 import gdgCert from '../../imports/GDG_Solution_Challenge.jpg';
 import udemyCert from '../../imports/Udemy-Agile_Scrum.jpg';
 import jpmorganCert from '../../imports/JPMorgan__Chase.jpg';
@@ -21,9 +24,32 @@ interface Certificate {
   file: string;
   color: string;
   icon: string;
+  position?: string;
 }
 
 const certificates: Certificate[] = [
+  {
+    title: "Generative AI with Google Cloud Data (Gold, 97%)",
+    issuer: "Nasscom FutureSkills Prime",
+    file: nasscomCert,
+    color: "from-yellow-400 to-amber-500",
+    icon: "🥇"
+  },
+  {
+    title: "Python for Data Science (Elite, 64%)",
+    issuer: "NPTEL · IIT Madras",
+    file: nptelCert,
+    color: "from-sky-400 to-blue-500",
+    icon: "🐍"
+  },
+  {
+    title: "Business Analytics Internship Completion",
+    issuer: "Cognifyz IT Solutions",
+    file: cognifyzCert,
+    color: "from-fuchsia-400 to-pink-500",
+    icon: "📊",
+    position: "object-top"
+  },
   {
     title: "GDG Solution Challenge",
     issuer: "Google Developer Groups",
@@ -67,8 +93,8 @@ const certificates: Certificate[] = [
     icon: "💼"
   },
   {
-    title: "Trigger Certification",
-    issuer: "Trigger",
+    title: "GitHub & Open Source Contributions Workshop",
+    issuer: "GDG on Campus · TRIGGER'24",
     file: triggerCert,
     color: "from-violet-400 to-purple-500",
     icon: "⚡"
@@ -124,7 +150,7 @@ function CertCard({ cert, onClick }: { cert: Certificate; onClick: () => void })
           <img
             src={cert.file}
             alt={cert.title}
-            className="w-full h-full object-cover"
+            className={`w-full h-full object-cover ${cert.position ?? ''}`}
           />
           {/* Hover hint overlay */}
           <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-all duration-300 flex items-center justify-center opacity-0 hover:opacity-100">
@@ -223,17 +249,17 @@ export function Certificates() {
         >
           <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-400/30 rounded-lg p-6 text-center">
             <Award className="w-12 h-12 text-blue-400 mx-auto mb-3" />
-            <div className="text-3xl font-bold text-white mb-2">12+</div>
+            <div className="text-3xl font-bold text-white mb-2">15+</div>
             <div className="text-gray-400">Certifications</div>
           </div>
           <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-400/30 rounded-lg p-6 text-center">
             <Trophy className="w-12 h-12 text-purple-400 mx-auto mb-3" />
-            <div className="text-3xl font-bold text-white mb-2">SIH 2025</div>
-            <div className="text-gray-400">Hackathon Participant</div>
+            <div className="text-3xl font-bold text-white mb-2">SIH 2025 & 2026</div>
+            <div className="text-gray-400">Internal Round Shortlisted</div>
           </div>
           <div className="bg-gradient-to-br from-pink-500/10 to-yellow-500/10 border border-pink-400/30 rounded-lg p-6 text-center">
             <Star className="w-12 h-12 text-pink-400 mx-auto mb-3" />
-            <div className="text-3xl font-bold text-white mb-2">8.2</div>
+            <div className="text-3xl font-bold text-white mb-2">8.3</div>
             <div className="text-gray-400">CGPA at MIT, Anna University</div>
           </div>
         </motion.div>
@@ -252,7 +278,7 @@ export function Certificates() {
               className="flex gap-6"
               style={{
                 width: 'max-content',
-                animation: 'marqueeScroll 38s linear infinite',
+                animation: 'marqueeScroll 48s linear infinite',
                 animationPlayState: isPaused ? 'paused' : 'running'
               }}
             >

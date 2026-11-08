@@ -12,10 +12,34 @@ export function Contact() {
     email: '',
     message: ''
   });
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Messages are delivered by Netlify Forms (see the hidden "contact" form in index.html)
+  // and arrive in the inbox set up under Netlify > Forms > Notifications.
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    setStatus('sending');
+    try {
+      const body = new URLSearchParams({
+        'form-name': 'contact',
+        'bot-field': '',
+        name: formData.name,
+        email: formData.email,
+        message: formData.message
+      }).toString();
+
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body
+      });
+      if (!res.ok) throw new Error('Request failed');
+
+      setFormData({ name: '', email: '', message: '' });
+      setStatus('sent');
+    } catch {
+      setStatus('error');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -89,11 +113,22 @@ export function Contact() {
                   />
                   <Button
                     type="submit"
+                    disabled={status === 'sending'}
                     className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
                   >
                     <Send className="mr-2" size={16} />
-                    Send Message
+                    {status === 'sending' ? 'Sending...' : 'Send Message'}
                   </Button>
+                  {status === 'sent' && (
+                    <p role="status" className="text-green-400 text-sm text-center">
+                      Thank you! Your message has been sent. I will get back to you soon.
+                    </p>
+                  )}
+                  {status === 'error' && (
+                    <p role="alert" className="text-red-400 text-sm text-center">
+                      The message could not be sent. Please email me directly at ffahmiya06@gmail.com.
+                    </p>
+                  )}
                 </form>
               </CardContent>
             </Card>
@@ -139,15 +174,15 @@ export function Contact() {
               <div className="space-y-3">
                 {[
                   { icon: Mail,     label: "ffahmiya06@gmail.com",             href: "mailto:ffahmiya06@gmail.com",                color: "from-red-400 to-pink-400" },
-                  { icon: Phone,    label: "+91 90256 22685",                   href: "tel:+919025622685",                          color: "from-green-400 to-blue-400" },
+                  { icon: Phone,    label: "Call me",                           href: "tel:+919025622685",                          color: "from-green-400 to-blue-400" },
                   { icon: Github,   label: "github.com/Fahmiya006",             href: "https://github.com/Fahmiya006",              color: "from-gray-400 to-gray-600" },
                   { icon: Linkedin, label: "linkedin.com/in/ffahmiya06",        href: "https://linkedin.com/in/ffahmiya06",         color: "from-blue-400 to-blue-600" }
                 ].map((social, index) => (
                   <motion.a
                     key={social.label}
                     href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    target={social.href.startsWith('http') ? '_blank' : undefined}
+                    rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1, duration: 0.5 }}
@@ -177,7 +212,7 @@ export function Contact() {
           className="text-center mt-16 pt-8 border-t border-gray-700/50"
         >
           <p className="text-gray-500">
-            © 2025 Fathima Fahmiya · Chennai, India · Engineering the future with AI.
+            © 2026 Fathima Fahmiya · Chennai, India · Engineering the future with AI.
           </p>
         </motion.div>
       </div>

@@ -2,41 +2,66 @@ import React from 'react';
 import { motion } from 'motion/react';
 
 export function TechStack() {
+  // NOTE: "level" is shown as a percentage bar. Levels are based on how much each
+  // skill is used across the projects on this site. Edit the numbers freely.
   const techCategories = [
     {
       category: "Languages",
       skills: [
-        { name: "Python", level: 88, icon: "🐍" },
+        { name: "Python", level: 90, icon: "🐍" },
         { name: "C++", level: 82, icon: "⚙️" },
-        { name: "JavaScript", level: 80, icon: "⚡" },
+        { name: "Java", level: 70, icon: "☕" },
+        { name: "JavaScript", level: 82, icon: "⚡" },
         { name: "C", level: 75, icon: "🔧" },
         { name: "HTML & CSS", level: 85, icon: "🎨" }
       ]
     },
     {
-      category: "Frameworks",
+      category: "Data & Machine Learning",
+      skills: [
+        { name: "Pandas & NumPy", level: 90, icon: "🐼" },
+        { name: "Matplotlib & Seaborn", level: 88, icon: "📈" },
+        { name: "Exploratory Data Analysis", level: 90, icon: "🔍" },
+        { name: "Scikit-learn", level: 78, icon: "🧠" },
+        { name: "NLTK & TF-IDF", level: 75, icon: "💬" },
+        { name: "Excel", level: 75, icon: "📊" }
+      ]
+    },
+    {
+      category: "Frameworks & Libraries",
       skills: [
         { name: "React.js", level: 82, icon: "⚛️" },
         { name: "Node.js", level: 80, icon: "🟩" },
-        { name: "Express.js", level: 78, icon: "🚀" }
+        { name: "Express.js", level: 78, icon: "🚀" },
+        { name: "Leaflet.js & OSRM", level: 72, icon: "🗺️" },
+        { name: "Flutter", level: 65, icon: "📱" }
       ]
     },
     {
       category: "Databases & Tools",
       skills: [
+        { name: "SQL", level: 80, icon: "🗄️" },
         { name: "MySQL", level: 80, icon: "🗃️" },
         { name: "MongoDB", level: 78, icon: "🍃" },
         { name: "Git & GitHub", level: 85, icon: "🌱" },
         { name: "VS Code", level: 90, icon: "💻" },
-        { name: "Excel", level: 75, icon: "📊" }
+        { name: "Jupyter Notebook", level: 88, icon: "📓" }
       ]
     },
     {
-      category: "Concepts & Soft Skills",
+      category: "Core Concepts",
       skills: [
         { name: "DSA", level: 80, icon: "🧩" },
         { name: "OOPs", level: 82, icon: "📦" },
-        { name: "Agile / SDLC", level: 78, icon: "🔄" },
+        { name: "DBMS", level: 80, icon: "🧱" },
+        { name: "Post-Quantum Cryptography", level: 65, icon: "🔐" }
+      ]
+    },
+    {
+      category: "Methods & Soft Skills",
+      skills: [
+        { name: "Agile / Scrum", level: 80, icon: "🔄" },
+        { name: "SDLC", level: 78, icon: "🛠️" },
         { name: "Prompt Engineering", level: 85, icon: "🤖" },
         { name: "Public Speaking", level: 88, icon: "🎤" }
       ]
@@ -67,7 +92,7 @@ export function TechStack() {
               key={category.category}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: categoryIndex * 0.2 }}
+              transition={{ duration: 0.8, delay: (categoryIndex % 2) * 0.2 }}
               viewport={{ once: true }}
               className="bg-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-lg p-6 hover:border-purple-400/50 transition-all duration-300"
             >
@@ -81,7 +106,7 @@ export function TechStack() {
                     key={skill.name}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: categoryIndex * 0.2 + index * 0.08 }}
+                    transition={{ duration: 0.5, delay: (categoryIndex % 2) * 0.2 + index * 0.08 }}
                     viewport={{ once: true }}
                     className="flex items-center space-x-4"
                   >
@@ -102,7 +127,7 @@ export function TechStack() {
                         <motion.div
                           initial={{ width: 0 }}
                           whileInView={{ width: `${skill.level}%` }}
-                          transition={{ duration: 1, delay: categoryIndex * 0.2 + index * 0.08 + 0.4 }}
+                          transition={{ duration: 1, delay: (categoryIndex % 2) * 0.2 + index * 0.08 + 0.4 }}
                           viewport={{ once: true }}
                           className="bg-gradient-to-r from-purple-400 to-pink-400 h-2 rounded-full"
                         />

@@ -23,7 +23,7 @@ export function Hero() {
                 style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
                 whileHover={{ scale: 1.2, rotateY: 360, transition: { duration: 0.5 } }}
               >
-                {letter === " " ? " " : letter}
+                {letter === " " ? " " : letter}
               </motion.span>
             ))}
           </h1>
@@ -73,8 +73,8 @@ export function Hero() {
           transition={{ delay: 1.5, duration: 0.8 }}
           className="space-y-4"
         >
-          <div className="text-lg text-gray-400">Madras Institute of Technology, Anna University · CGPA 8.2</div>
-          <div className="text-blue-400">Python · MERN Stack · Data Analytics · DSA · Leadership</div>
+          <div className="text-lg text-gray-400">Madras Institute of Technology, Anna University · CGPA 8.3</div>
+          <div className="text-blue-400">Python · Machine Learning · Data Analytics · MERN Stack · Leadership</div>
         </motion.div>
       </div>
     </section>
