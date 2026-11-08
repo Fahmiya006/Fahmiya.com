@@ -56,7 +56,7 @@ export function Navbar() {
   return (
     <header className="fixed top-0 inset-x-0 z-50 bg-black/75 backdrop-blur-md border-b border-white/10">
       {/* Dashboard bar */}
-      <div className="max-w-7xl mx-auto flex items-center gap-4 px-4 sm:px-6 h-16">
+      <div className="w-full flex items-center gap-4 px-4 sm:px-8 h-16">
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="flex items-center gap-3 shrink-0"
